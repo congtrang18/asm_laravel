@@ -5,7 +5,9 @@
 
 <head>
     @include('layout.head')
+{{-- <link rel=stylesheet href={{asset("theme/client/page/wp-content/cache/minify/9ba46.css")}} media=all> --}}
     @yield('style')
+    @yield('bootstrap')
 </head>
 
 <body id=body
@@ -14,10 +16,8 @@
         @include('layout.header')
         <div id=wrapper>
             <div class=content>
-                @section('banner')
-                    @include('layout.banner')
-                @show
-                <div data-elementor-type=wp-page data-elementor-id=13 class="elementor elementor-13">
+
+                {{-- <div data-elementor-type=wp-page data-elementor-id=13 class="elementor elementor-13">
                     <section
                         class="elementor-section elementor-top-section elementor-element elementor-element-53e17778 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
                         data-id=53e17778 data-element_type=section>
@@ -27,19 +27,15 @@
                                 @yield('content')
                             </div>
 
-                            <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-16479b42"
-                                data-id=16479b42 data-element_type=column>
-                                
-                                    @include('layout.navbar')
-                                    
-                              
-                            </div>
+                           
 
 
                         </div>
                     </section>
 
-                </div>
+                </div> --}}
+                @yield('content')
+
             </div>
             @include('layout.footer')
             <div class=aside-panel>
@@ -56,10 +52,10 @@
                 </ul>
             </div>
             {{-- <div class=woocommerce-notices-wrapper></div> --}}
-            
+
         </div>
         @include('layout.script')
 </body>
-
+@yield('script')
 
 </html>

@@ -44,4 +44,7 @@ class Post extends Model
     public function phe_duyet(){
         return $this->belongsTo(PheDuyet::class);
     }
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
 }

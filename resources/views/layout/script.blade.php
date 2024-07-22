@@ -161,23 +161,4 @@
     }; /*]]>*/
 </script>
 <script src={{asset("theme/client/page/wp-content/cache/minify/58a4d.js")}}></script>
-{{-- user --}}
-<script>
-    document.querySelector('.btn-sign-up').addEventListener('click', function() {
-        fetch('http://127.0.0.1:8000/sign-up', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({
-                name:'ahsffa',
-                email:'ahsgagga',
-                password:'234',
-            })
-        })
-        .then((res)=>{
-            console.log(res.json());
-        })
-    })
-</script>
+

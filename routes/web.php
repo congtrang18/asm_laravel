@@ -18,24 +18,37 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[TrangChuController::class,'index'])->name('trangchu');
-Route::get('/find',[TrangChuController::class,'find'])->name('find');
+Route::get('/', [TrangChuController::class, 'index'])->name('trangchu');
+Route::get('/find', [TrangChuController::class, 'find'])->name('find');
 
 
-Route::post('sign-up',[UserController::class,'store'])->name('sign-up');
+Route::get('form-dang-ky', [UserController::class, 'formdangky'])->name('form-dang-ky');
+Route::post('dang-ky', [UserController::class, 'store'])->name('dang-ky');
+
+Route::post('login', [UserController::class, 'login'])->name('login');
+Route::get('logout', [UserController::class, 'logout'])->name('logout');
+Route::post('changpassword', [UserController::class, 'changepassword'])->name('changpassword');
 
 
-Route::get('detail/{id}/{slug}', [DetailController::class,'index'])->name('detail');
+Route::get('my-acount', [UserController::class, 'myacount'])->name('myacount');
+
+
+Route::get('formlogin', [UserController::class, 'create'])->name('formlogin');
+
+
+
+
+Route::get('detail/{id}/{slug}', [DetailController::class, 'index'])->name('detail');
+Route::post('comment', [DetailController::class, 'comment'])->name('comment');
+Route::get('showform')->name('showform');
 // Route::get('admin', function () {
 // });
-Route::prefix('admin')
+Route::prefix('admin')->middleware('authadmin')
     ->as('admin.')
     ->group(function () {
-        Route::get("/",function(){
-    return view('admin.dashboard');
-
+        Route::get("/", function () {
+            return view('admin.dashboard');
         });
         Route::resource('tag', TagController::class);
         Route::resource('post', PostController::class);
-
     });

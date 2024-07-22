@@ -12,6 +12,7 @@
             <div class=header_news-ticker-wrap>
                 <div class=hnt_title>Bài viết mới :</div>
                 <div class="header_news-ticker fl-wrap">
+                    {{-- @dd($posts_new) --}}
                     <ul>
                         @foreach ($posts_new as $item)
                             <li
@@ -62,13 +63,49 @@
                 <img src={{ asset('theme/client/page/wp-content/themes/gmag/includes/images/logo.png') }}
                     class=logo-holder alt>
             </a>
-            <div class="search_btn htact show_search-btn"><i class="far fa-search"></i> <span
-                    class=header-tooltip>Search</span></div>
-            <div class="srf_btn htact show-reg-form"><i class="fal fa-user"></i> <span class=header-tooltip>Sign
-                    In</span></div>
+            <div class="search_btn htact show_search-btn"><i class="far fa-search"></i> <span class=header-tooltip>Tìm
+                    kiếm</span></div>
+            {{-- href="{{route('dang-ky')}}" --}}
+            {{-- @if (\Auth::id())
+                        
+                    @endif --}}
+
+
+            @if (Auth::id())
+                <div class="user srf_btn htact">
+                    @if (!empty(Auth::user()->avatar))
+                        <img style="width: 50px;height: 50px; border-radius: 50%" src="{{ Auth::user()->avatar }}"
+                            alt="">
+                    @else
+                        <p style="display: flex; align-items: center;justify-content: center; padding: 21px">{{Auth::user()->name }}</p>
+                    @endif
+                    {{-- <i class="fal fa-user"></i> --}}
+                    
+                    <span class=header-tooltip>
+                        <a href="{{ route('myacount') }}" style="color: white">
+                            Quản lý tài khoản
+
+                        </a>
+                    </span>
+
+
+                </div>
+            @else
+                <div class="user srf_btn htact">
+                    <i class="fal fa-user"></i>
+                    <span class=header-tooltip>
+                        <a href="{{ route('formlogin') }}" style="color: white">
+                            Đăng nhập
+                            {{-- class="srf_btn htact show-reg-form" --}}
+                        </a>
+                    </span>
+
+
+                </div>
+            @endif
             <div class="show-cart sc_btn htact"><i class="fal fa-shopping-bag"></i>
                 <div class="show-cart_count "><span class=show-cart_count_main>0 items</span></div><span
-                    class=header-tooltip>Your Cart</span>
+                    class=header-tooltip>Giỏ hàng</span>
             </div>
             <div class="header-search-wrap novis_sarch">
                 <div class=widget-inner>
@@ -115,10 +152,12 @@
                                         class="fas fa-caret-down"></i></a>
                                 <ul class=sub-menu>
                                     @foreach ($item['posts'] as $post)
-                                    <li id=menu-item-342 class="menu-item menu-item-type-post_type menu-item-object-page"><a
-                                        href="{{route('detail',[$post["id"],$post["tieu_de"]])}}" class=menu-blog>{{substr($post['tieu_de'],0,40).'...'}}</a></li>
+                                        <li id=menu-item-342
+                                            class="menu-item menu-item-type-post_type menu-item-object-page"><a
+                                                href="{{ route('detail', [$post['id'], $post['tieu_de']]) }}"
+                                                class=menu-blog>{{ substr($post['tieu_de'], 0, 40) . '...' }}</a></li>
                                     @endforeach
-                                    
+
 
                                     {{-- <li id=menu-item-345 class="menu-item menu-item-type-post_type menu-item-object-page"><a
                                         href=blog-list-style/index.html class=menu-blog-list-style>2

@@ -146,7 +146,7 @@
                                 <a class=post-category-marker
                                     href={{ route('detail', [$item->id, $item->tieu_de]) }}>{{ $item->tag->name }} </a>
                                 <div class=list-post-media>
-                                    <a href=../how-maps-reshape-american-politics-in-world/index.html>
+                                    <a href={{route('detail',[$item->id,$item->tieu_de])}}>
                                         <div class=bg-wrap>
                                             <div class=bg data-bg="{{ $item->anh_dai_dien }}">
                                             </div>
@@ -220,50 +220,54 @@
             <div class="pr-subtitle prs_big">
                 Bình luận <span>3</span></div>
             <ul class="commentlist clearafix">
-                <li class="comment even thread-even depth-1 parent">
-                    <div class=comment-author>
-                        <img src=../wp-content/uploads/2022/06/2-1.jpg width=50 height=50 alt=Avatar
-                            class="avatar avatar-50wp-user-avatar wp-user-avatar-50 alignnone photo tt-comment-avatar avatar-default">
-                    </div>
-                    <div id=div-comment-5 class="comment-body smpar">
-                        <h4>Kevin Antony</h4>
-                        <div class=clearfix></div>
-                        <div class="clearfix comment-text">
-                            <p>mô tả</p>
+                @foreach ($comments as $item)
+                {{-- @dd($item->id) --}}
+                    <li class="comment even thread-even depth-1 parent">
+                        <div class=comment-author>
+                            <img src="{{ $item->user->avatar }}" width=50 height=50 alt=Avatar
+                                class="avatar avatar-50wp-user-avatar wp-user-avatar-50 alignnone photo tt-comment-avatar avatar-default">
                         </div>
-                        <a rel=nofollow class=comment-reply-link href='index8e42.html?replytocom=5#respond' data-commentid=5
-                            data-postid=43 data-belowelement=div-comment-5 data-respondelement=respond
-                            data-replyto="Reply to Kevin Antony" aria-label='Reply to Kevin Antony'>Reply</a>
-                        <div class=comment-meta><i class="far fa-clock"></i> June 16, 2022
-                        </div>
-                        <div class=comment-body_dec></div>
-                    </div>
-                    <ul class=children>
-                        <li class="comment odd alt depth-2">
-                            <div class=comment-author>
-                                <img src=../wp-content/uploads/2022/06/4.jpg width=50 height=50 alt="Liza Rose"
-                                    class="avatar avatar-50 wp-user-avatar wp-user-avatar-50 alignnone photo tt-comment-avatar">
+                        <div id="div-comment-{{$item->id}}" class="comment-body smpar">
+                            <h4>{{ $item->user->name }}</h4>
+                            <div class=clearfix></div>
+                            <div class="clearfix comment-text">
+                                <p>{{ $item->mo_ta }}</p>
                             </div>
-                            <div id=div-comment-6 class="comment-body smpar">
-                                <h4>Liza Rose</h4>
-                                <div class=clearfix></div>
-                                <div class="clearfix comment-text">
-                                    <p>In enim justo, rhoncus ut, imperdiet a, venenatis
-                                        vitae, justo. Nullam dictum felis eu pede mollis
-                                        pretium.</p>
+                            <a rel=nofollow class=comment-reply-link href='?replytocom={{$item->id}}#respond'
+                                data-commentid="{{$item->id}}" data-postid="{{$item->post->id}}" data-belowelement="div-comment-{{$item->id}}" data-respondelement=respond
+                                data-replyto="Reply to Kevin Antony" aria-label='Reply to Kevin Antony'>Trả lời</a>
+                            <div class=comment-meta><i class="far fa-clock"></i>
+                                {{ date('d-m-Y', strtotime($item->created_at)) }}</div>
+                            <div class=comment-body_dec></div>
+                        </div>
+                        {{-- <ul class=children>
+                            <li class="comment odd alt depth-2">
+                                <div class=comment-author>
+                                    <img src=../wp-content/uploads/2022/06/4.jpg width=50 height=50 alt="Liza Rose"
+                                        class="avatar avatar-50 wp-user-avatar wp-user-avatar-50 alignnone photo tt-comment-avatar">
                                 </div>
-                                <a rel=nofollow class=comment-reply-link href='index267f.html?replytocom=6#respond'
-                                    data-commentid=6 data-postid=43 data-belowelement=div-comment-6
-                                    data-respondelement=respond data-replyto="Reply to Liza Rose"
-                                    aria-label='Reply to Liza Rose'>Reply</a>
-                                <div class=comment-meta><i class="far fa-clock"></i> June
-                                    16, 2022</div>
-                                <div class=comment-body_dec></div>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-                <li class="comment even thread-odd thread-alt depth-1">
+                                <div id=div-comment-6 class="comment-body smpar">
+                                    <h4>Liza Rose</h4>
+                                    <div class=clearfix></div>
+                                    <div class="clearfix comment-text">
+                                        <p>In enim justo, rhoncus ut, imperdiet a, venenatis
+                                            vitae, justo. Nullam dictum felis eu pede mollis
+                                            pretium.</p>
+                                    </div>
+                                    <a rel=nofollow class=comment-reply-link href='index267f.html?replytocom=6#respond'
+                                        data-commentid=6 data-postid=43 data-belowelement=div-comment-6
+                                        data-respondelement=respond data-replyto="Reply to Liza Rose"
+                                        aria-label='Reply to Liza Rose'>Reply</a>
+                                    <div class=comment-meta><i class="far fa-clock"></i> June
+                                        16, 2022</div>
+                                    <div class=comment-body_dec></div>
+                                </div>
+                            </li>
+                        </ul> --}}
+                    </li>
+                @endforeach
+
+                {{-- <li class="comment even thread-odd thread-alt depth-1">
                     <div class=comment-author>
                         <img src=../wp-content/uploads/2022/06/4.jpg width=50 height=50 alt="Liza Rose"
                             class="avatar avatar-50 wp-user-avatar wp-user-avatar-50 alignnone photo tt-comment-avatar">
@@ -285,7 +289,7 @@
                         </div>
                         <div class=comment-body_dec></div>
                     </div>
-                </li>
+                </li> --}}
             </ul>
             <div class=clear></div>
             <div class=clearfix></div>
@@ -295,27 +299,50 @@
                         <div class="pr-subtitle "><span
                                 class="comment-title-area crunchify-text tt-post-comment-form-heading">
                                 <span>Để lại bình luận: </span> </span></div> <small><a rel=nofollow
-                                id=cancel-comment-reply-link href=index.html#respond style=display:none;>Cancel
+                                id=cancel-comment-reply-link href=index.html#respond style=display:none;>
+                                Cancel
                                 reply</a></small>
                     </h3>
-                    <form action=https://webredox.net/demo/wp/gmag/wp-comments-post.php method=post id=commentform
-                        class="add-comment custom-form">
-                        <p class=comment-notes><span id=email-notes>Địa chỉ email của bạn sẽ không được công bố</span> <span class=required-field-message>Các trường bắt buộc phải nhập
-                                <span class=required>*</span></span></p>
+                    <form action="{{ route('comment') }}" method=post id=commentform class="add-comment custom-form">
+                        <input  type="hidden" name="post_id" value="{{$postdetail->id}}">
+                        @csrf
+                      
+
                         <fieldset>
-                            <div class=row>
-                                <div class=col-md-6><input id=author placeholder="Tên của bạn*" name=author type=text value
-                                        size=40></div>
-                                <div class=col-md-6><input id=email placeholder="Email*" name=email type=text value
-                                        size=40></div>
-                            </div>
-                            <p class=comment-form-cookies-consent><input id=wp-comment-cookies-consent
-                                    name=wp-comment-cookies-consent type=checkbox value=yes>
-                                <label for=wp-comment-cookies-consent>Lưu tên, email và trang web của tôi trong trình duyệt này cho lần bình luận tiếp theo của tôi.</label>
+                            @if (!Auth::user())
+                                <div class=row>
+                                    <div class=col-md-6><input id=author placeholder="Tên của bạn*" name='name' type=text
+                                            value size=40>
+                                            <span style="color: red">
+                                                @error('name')
+                                                    {{$message}}
+                                                @enderror
+                                            </span>
+                                        </div>
+                                    <div class=col-md-6><input id=email placeholder="Email*" name=email type=text value
+                                            size=40>
+                                            <span style="color: red">
+                                                @error('email')
+                                                    {{$message}}
+                                                @enderror
+                                            </span>
+                                    </div>
+                                </div>
+                                
+                            @endif
+                            <p style="color: red;font-size: 12px">
+                                @if (session('message'))
+                                    {{ session('message') }}
+                                @endif
                             </p>
-                            <textarea id=comment name=comment cols=40 rows=8 placeholder="Bình luận*" aria-required=true></textarea>
-                        </fieldset><button class="btn float-btn color-btn">Thêm bình luận <i
-                                class="fas fa-caret-right"></i></button>
+                            <textarea id=comment name="mo_ta" cols=40 rows=8 placeholder="Bình luận*" aria-required=true></textarea>
+                            <span style="color: red">
+                                @error('mo_ta')
+                                    {{$message}}
+                                @enderror
+                            </span>
+                        </fieldset>
+                        <button class="btn float-btn color-btn">Thêm bình luận <i class="fas fa-caret-right"></i></button>
                         <p class=form-submit><input name=submit type=submit id=submit class=submit value="Post Comment">
                             <input type=hidden name=comment_post_ID value=43 id=comment_post_ID>
                             <input type=hidden name=comment_parent id=comment_parent value=0>

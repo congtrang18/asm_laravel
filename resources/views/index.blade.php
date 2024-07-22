@@ -1,4 +1,6 @@
 @extends('layout.master')
+
+
 @section('content')
    
     <div class="elementor-widget-wrap elementor-element-populated">
