@@ -77,10 +77,11 @@
                         <img style="width: 50px;height: 50px; border-radius: 50%" src="{{ Auth::user()->avatar }}"
                             alt="">
                     @else
-                        <p style="display: flex; align-items: center;justify-content: center; padding: 21px">{{Auth::user()->name }}</p>
+                        <p style="display: flex; align-items: center;justify-content: center; padding: 21px">
+                            {{ Auth::user()->name }}</p>
                     @endif
                     {{-- <i class="fal fa-user"></i> --}}
-                    
+
                     <span class=header-tooltip>
                         <a href="{{ route('myacount') }}" style="color: white">
                             Quản lý tài khoản
@@ -109,9 +110,9 @@
             </div>
             <div class="header-search-wrap novis_sarch">
                 <div class=widget-inner>
-                    <form action=https://webredox.net/demo/wp/gmag />
-                    <input name=s id=se type=text class=search placeholder=Search... value>
-                    <input type=hidden name=post_type value=post>
+                    <form action="{{route('find')}} " method="get">
+                    <input name="name" id=se type=text class=search placeholder=Search... value>
+                   
                     <button class=search-submit id=submit_btn><i class="fa fa-search transition"></i>
                     </button>
                     </form>

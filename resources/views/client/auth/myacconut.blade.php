@@ -21,29 +21,7 @@
             font-size: 17px !important;
         }
 
-        /* .tab {
-                            display: inline-block;
-                            padding: 10px 20px;
-                            cursor: pointer;
-                            background-color: #f1f1f1;
-                            border: 1px solid #ccc;
-                        }
-
-                        .tab.active {
-                            background-color: #ccc;
-                        }
-
-                        .tab-content {
-                            display: none;
-                            
-                        }
-
-                        .tab-content.active {
-                            display: block;
-                        } */
-        /* #tab-changepassword{
-                            display: none;
-                         } */
+        
     </style>
 @endsection
 @section('content')

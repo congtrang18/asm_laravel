@@ -4,10 +4,26 @@
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
 <head>
+ 
     @include('layout.head')
     @yield('style')
 </head>
+<?php 
+use App\Models\Admin\Post;
+use App\Models\Admin\Tag;
 
+$posts_new = Post::with('tag')->where('tin_moi', 'like', 'on')->get();
+$banners = Post::with('tag', 'user')->where('tin_moi', 'like', 'on')->limit(4)->get();
+$menus = Tag::with('posts')->get();
+$post_popular=Post::with('tag')->where('tin_noi_bat', 'like', 'on')->limit(4)->orderByDesc('id')->get();
+$tags = Tag::withCount('posts')->get();
+
+
+
+// var_dump($tags);
+// die;
+
+?>
 <body id=body
     class="home page-template-default page page-id-13 wp-embed-responsive theme-gmag woocommerce-no-js elementor-default elementor-kit-7 elementor-page elementor-page-13">
     <div id=main>

@@ -19,13 +19,13 @@ class DetailController extends Controller
          ['tag_id', $postdetail->tag_id],
          ['id', '<>', $id]
       ])->get();
-      $posts_new = Post::query()->where('tin_moi', 'like', 'on')->get();
+      // $posts_new = Post::query()->where('tin_moi', 'like', 'on')->get();
       //    dd($postdefaut);
-      $post_popular = Post::with('tag')->where('tin_noi_bat', 'like', 'on')->limit(4)->orderByDesc('id')->get();
+      // $post_popular = Post::with('tag')->where('tin_noi_bat', 'like', 'on')->limit(4)->orderByDesc('id')->get();
 
       $tags = Tag::withCount('posts')->get();
-      $menus = Tag::with('posts')->get();
-      $banners = Post::with('tag')->where('tin_moi', 'like', 'on')->limit(4)->get();
+      // $menus = Tag::with('posts')->get();
+      // $banners = Post::with('tag')->where('tin_moi', 'like', 'on')->limit(4)->get();
       $comments = Comment::with('user', 'post')->where('post_id', $id)->orderBy('id', 'desc')->get();
       // dd($comments);
 
@@ -33,10 +33,10 @@ class DetailController extends Controller
          'postdetail',
          'tags',
          'postdefaut',
-         'posts_new',
-         'menus',
-         'banners',
-         'post_popular',
+         // 'posts_new',
+         // 'menus',
+         // 'banners',
+         // 'post_popular',
          'comments'
       ));
    }

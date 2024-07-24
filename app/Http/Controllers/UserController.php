@@ -13,17 +13,7 @@ use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 
 {
-    protected $data = '';
-    public function __construct()
-    {
-        $posts_new = Post::with('tag')->where('tin_moi', 'like', 'on')->get();
-        $menus = Tag::with('posts')->get();
-        $tags = Tag::withCount('posts')->get();
-
-        $this->data = compact('posts_new', 'menus', 'tags');
-        // dd($this->data);
-        return $this->data;
-    }
+   
     public function index()
     {
     }
@@ -78,21 +68,17 @@ class UserController extends Controller
     }
     public function create()
     {
-        $posts_new = Post::with('tag')->where('tin_moi', 'like', 'on')->get();
-        $menus = Tag::with('posts')->get();
-        $tags = Tag::withCount('posts')->get();
+       
 
 
-        return view('client.auth.login', compact('posts_new', 'menus', 'tags'));
+        return view('client.auth.login');
     }
     public function formdangky()
     {
-        $posts_new = Post::with('tag')->where('tin_moi', 'like', 'on')->get();
-        $menus = Tag::with('posts')->get();
-        $tags = Tag::withCount('posts')->get();
+        
 
 
-        return view('client.auth.dangky', compact('posts_new', 'menus', 'tags'));
+        return view('client.auth.dangky');
     }
     public function myacount()
     {

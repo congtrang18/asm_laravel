@@ -5,18 +5,26 @@
 
 <head>
     @include('layout.head')
-{{-- <link rel=stylesheet href={{asset("theme/client/page/wp-content/cache/minify/9ba46.css")}} media=all> --}}
+    {{-- <link rel=stylesheet href={{asset("theme/client/page/wp-content/cache/minify/9ba46.css")}} media=all> --}}
     @yield('style')
     @yield('bootstrap')
 </head>
 
 <body id=body
     class="home page-template-default page page-id-13 wp-embed-responsive theme-gmag woocommerce-no-js elementor-default elementor-kit-7 elementor-page elementor-page-13">
+    <?php
+    use App\Models\Admin\Post;
+    use App\Models\Admin\Tag;
+    
+    $posts_new = Post::with('tag')->where('tin_moi', 'like', 'on')->get();
+    $menus = Tag::with('posts')->get();
+    $tags = Tag::withCount('posts')->get();
+    ?>
     <div id=main>
         @include('layout.header')
         <div id=wrapper>
             <div class=content>
-
+                @yield('image')
                 {{-- <div data-elementor-type=wp-page data-elementor-id=13 class="elementor elementor-13">
                     <section
                         class="elementor-section elementor-top-section elementor-element elementor-element-53e17778 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
