@@ -20,8 +20,6 @@
         p {
             font-size: 17px !important;
         }
-
-        
     </style>
 @endsection
 @section('content')
@@ -190,6 +188,13 @@
                                                     {{ $message }}
                                                 @enderror
                                             </span>
+                                            <div>
+                                                <span style="color: green">
+                                                    @if (session('message'))
+                                                        {{ session('message') }}
+                                                    @endif
+                                                </span>
+                                            </div>
                                         </div>
                                         <div class="text-center mt-3 ">
                                             <button type="submit" class="btn btn-warning ">Cập nhật</button>

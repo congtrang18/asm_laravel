@@ -233,37 +233,41 @@
                             <div class="clearfix comment-text">
                                 <p>{{ $item->mo_ta }}</p>
                             </div>
-                            <a rel=nofollow class=comment-reply-link href='?replytocom={{$item->id}}#respond'
+                            <a rel=nofollow class=comment-reply-link href='?reply={{$item->id}}#respond'
                                 data-commentid="{{$item->id}}" data-postid="{{$item->post->id}}" data-belowelement="div-comment-{{$item->id}}" data-respondelement=respond
                                 data-replyto="Reply to Kevin Antony" aria-label='Reply to Kevin Antony'>Trả lời</a>
                             <div class=comment-meta><i class="far fa-clock"></i>
                                 {{ date('d-m-Y', strtotime($item->created_at)) }}</div>
                             <div class=comment-body_dec></div>
                         </div>
-                        {{-- <ul class=children>
+                        @if (isset($item->parentcommentID))
+                        {{-- @dd($item) --}}
+                        @foreach ($collection as $item)
+                            
+                        @endforeach
+                        <ul class=children>
                             <li class="comment odd alt depth-2">
                                 <div class=comment-author>
-                                    <img src=../wp-content/uploads/2022/06/4.jpg width=50 height=50 alt="Liza Rose"
+                                    <img src="{{$item->user->avatar}}" width=50 height=50 alt="{{$item->user->name}}"
                                         class="avatar avatar-50 wp-user-avatar wp-user-avatar-50 alignnone photo tt-comment-avatar">
                                 </div>
                                 <div id=div-comment-6 class="comment-body smpar">
-                                    <h4>Liza Rose</h4>
+                                    <h4>{{$item->user->name}}</h4>
                                     <div class=clearfix></div>
                                     <div class="clearfix comment-text">
-                                        <p>In enim justo, rhoncus ut, imperdiet a, venenatis
-                                            vitae, justo. Nullam dictum felis eu pede mollis
-                                            pretium.</p>
+                                        <p>{{$item->mo_ta}}</p>
                                     </div>
                                     <a rel=nofollow class=comment-reply-link href='index267f.html?replytocom=6#respond'
                                         data-commentid=6 data-postid=43 data-belowelement=div-comment-6
                                         data-respondelement=respond data-replyto="Reply to Liza Rose"
                                         aria-label='Reply to Liza Rose'>Reply</a>
-                                    <div class=comment-meta><i class="far fa-clock"></i> June
-                                        16, 2022</div>
+                                    <div class=comment-meta><i class="far fa-clock"></i>  {{ date('d-m-Y', strtotime($item->created_at)) }}</div>
                                     <div class=comment-body_dec></div>
                                 </div>
                             </li>
-                        </ul> --}}
+                        </ul>
+                        @endif
+                        
                     </li>
                 @endforeach
 
@@ -303,8 +307,12 @@
                                 Cancel
                                 reply</a></small>
                     </h3>
+                   
                     <form action="{{ route('comment') }}" method=post id=commentform class="add-comment custom-form">
                         <input  type="hidden" name="post_id" value="{{$postdetail->id}}">
+                        <?php if (isset($_GET['reply'])) { ?>
+                            <input type="hidden" name="reply" value="{{$_GET['reply']}}" id="">
+                       <?php } ?>
                         @csrf
                       
 

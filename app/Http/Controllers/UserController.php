@@ -80,6 +80,10 @@ class UserController extends Controller
 
         return view('client.auth.dangky');
     }
+    public function forgetpassword(){
+        return view('client.auth.forgetpassword');
+
+    }
     public function myacount()
     {
         // $posts_new = Post::with('tag')->where('tin_moi', 'like', 'on')->get();
@@ -130,6 +134,7 @@ class UserController extends Controller
                     'password' => Hash::make($request->input('changepassword'))
                 ]
             );
+            return back()->with('message','thay đổi mật khẩu thành công');
         }
     }
 }

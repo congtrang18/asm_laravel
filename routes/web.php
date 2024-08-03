@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\QLTKController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\DetailController;
+use App\Http\Controllers\Mails\SendMailUser;
 use App\Http\Controllers\TrangChuController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -35,7 +36,11 @@ Route::get('my-acount', [UserController::class, 'myacount'])->name('myacount');
 
 
 Route::get('formlogin', [UserController::class, 'create'])->name('formlogin');
-Route::get('profile',function(){
+Route::get('forgetpassword', [UserController::class, 'forgetpassword'])->name('forgetpassword');
+Route::post('sendEmail', [SendMailUser::class, 'sendEmail'])->name('sendEmail');
+
+
+Route::get('profile', function () {
     return view('client.profile.index');
 });
 
@@ -54,9 +59,7 @@ Route::prefix('admin')->middleware('authadmin')
         });
         Route::resource('tag', TagController::class);
         Route::resource('post', PostController::class);
-        Route::get('user',[QLTKController::class,'index'])->name('user');
-        Route::get('user/update',[QLTKController::class,'update']);
-        Route::get('user/destroy/{id}',[QLTKController::class,'destroy'])->name('user.destroy');
-
-
+        Route::get('user', [QLTKController::class, 'index'])->name('user');
+        Route::get('user/update', [QLTKController::class, 'update']);
+        Route::get('user/destroy/{id}', [QLTKController::class, 'destroy'])->name('user.destroy');
     });

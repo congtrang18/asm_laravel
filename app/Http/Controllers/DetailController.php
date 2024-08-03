@@ -42,13 +42,14 @@ class DetailController extends Controller
    }
    public function comment(Request $request)
    {
-      
+
       if (Auth::check()) {
          $request->validate([
             'mo_ta' => 'required',
          ], [
             'mo_ta.required' => 'Bắt buộc phải nhập'
          ]);
+
          $post = Post::query()->findOrFail($request->input('post_id'));
          $user_id = Auth::user();
          $data = [
@@ -57,6 +58,21 @@ class DetailController extends Controller
 
             'mo_ta' => $request->input('mo_ta')
          ];
+         if (isset($_POST['reply'])) {
+            $reply = $_POST['reply'];
+            $data = [
+               'post_id' => $post->id,
+               'user_id' => $user_id->id,
+
+               'mo_ta' => $request->input('mo_ta'),
+               'parentcommentID' => $reply
+            ];
+            Comment::query()->create($data);
+            return back();
+
+            // dd($data);
+         }
+         // die;
          Comment::query()->create($data);
          return back();
       } else {
@@ -88,7 +104,7 @@ class DetailController extends Controller
             'post_id' => $post->id,
             'user_id' => $user->id,
             'mo_ta' => $request->input('mo_ta'),
-            
+
          ];
          Comment::query()->create($data);
          return back();
