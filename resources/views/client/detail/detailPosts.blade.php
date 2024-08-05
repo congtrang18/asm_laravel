@@ -23,14 +23,15 @@
             <div class=clearfix></div>
             <h1>{{ $postdetail->tieu_de }}</h1>
             <div class=clearfix></div>
-            <div class=author-link><a href=../author/webredox/index.html><img
-                        src=theme/client/page/wp-content/uploads/2022/06/3.jpg width=36 height=36 alt="Ann Kowalsky"
+            <div class=author-link><a href=../author/webredox/index.html><img src="{{ $postdetail->user->avatar }}" width=36
+                        height=36 alt="{{ $postdetail->user->name }}"
                         class="avatar avatar-36 wp-user-avatar wp-user-avatar-36 alignnone photo">
-                    <span>By Ann Kowalsky</span></a></div>
-            <span class=post-date><i class="far fa-clock"></i> June 8, 2022</span>
+                    <span>{{ $postdetail->user->name }}</span></a></div>
+            <span class=post-date><i class="far fa-clock"></i>
+                {{ date('d-m-Y', strtotime($postdetail->user->created_at)) }}</span>
             <ul class=post-opt>
-                <li><i class="far fa-comments-alt"></i> 3 </li>
-                <li><i class="fal fa-eye"></i> 1,178 views </li>
+                <li><i class="far fa-comments-alt"></i> {{ $countcomment->comments_count }}</li>
+                <li><i class="fal fa-eye"></i> {{ $postdetail->luot_xem }} </li>
             </ul>
         </div>
         <div class="single-post-media fl-wrap">
@@ -88,7 +89,7 @@
             </div>
             <div class=clearfix></div>
             <div class=single-post-content_text id=font_chage>
-                {{ $postdetail->mo_ta }}
+                {!! $postdetail->mo_ta !!}
             </div>
             <div class="single-post-footer fl-wrap">
                 <div class=post-single-tags>
@@ -110,15 +111,15 @@
                     class="avatar avatar-80 wp-user-avatar wp-user-avatar-80 alignnone photo">
             </div>
             <div class="author-content fl-wrap">
-                <h5>Tác giả <a href=../author/webredox/index.html>{{ $postdetail->user->name }}</a></h5>
-                <p>In a professional context it often happens that private or corporate
+                <h5>Tác giả <a href="{{ route('profile', $postdetail->user->id) }}">{{ $postdetail->user->name }}</a></h5>
+                {{-- <p>In a professional context it often happens that private or corporate
                     clients corder a publication to be made and presented with the actual
                     content still not being ready. Think of a news blog that’s filled with
                     content hourly on the day of going live. Filled with content hourly on
-                    the day of going live.</p>
+                    the day of going live.</p> --}}
             </div>
             <div class="profile-card-footer fl-wrap">
-                <a href=../author/webredox/index.html class=post-author_link>Trang cá nhân <i
+                <a href="{{ route('profile', $postdetail->user->id) }}" class=post-author_link>Trang cá nhân <i
                         class="fas fa-caret-right"></i></a>
                 <div class=profile-card-footer_soc>
                     <div class=profile-card-footer_title>Theo dõi:</div>
@@ -146,7 +147,7 @@
                                 <a class=post-category-marker
                                     href={{ route('detail', [$item->id, $item->tieu_de]) }}>{{ $item->tag->name }} </a>
                                 <div class=list-post-media>
-                                    <a href={{route('detail',[$item->id,$item->tieu_de])}}>
+                                    <a href={{ route('detail', [$item->id, $item->tieu_de]) }}>
                                         <div class=bg-wrap>
                                             <div class=bg data-bg="{{ $item->anh_dai_dien }}">
                                             </div>
@@ -218,56 +219,55 @@
         </div>
         <div id=comments class="single-post-comm fl-wrap">
             <div class="pr-subtitle prs_big">
-                Bình luận <span>3</span></div>
+                Bình luận: <span>{{ $countcomment->comments_count }}</span></div>
             <ul class="commentlist clearafix">
                 @foreach ($comments as $item)
-                {{-- @dd($item->id) --}}
                     <li class="comment even thread-even depth-1 parent">
                         <div class=comment-author>
                             <img src="{{ $item->user->avatar }}" width=50 height=50 alt=Avatar
                                 class="avatar avatar-50wp-user-avatar wp-user-avatar-50 alignnone photo tt-comment-avatar avatar-default">
                         </div>
-                        <div id="div-comment-{{$item->id}}" class="comment-body smpar">
+                        <div id="div-comment-{{ $item->id }}" class="comment-body smpar">
                             <h4>{{ $item->user->name }}</h4>
                             <div class=clearfix></div>
                             <div class="clearfix comment-text">
                                 <p>{{ $item->mo_ta }}</p>
                             </div>
-                            <a rel=nofollow class=comment-reply-link href='?reply={{$item->id}}#respond'
-                                data-commentid="{{$item->id}}" data-postid="{{$item->post->id}}" data-belowelement="div-comment-{{$item->id}}" data-respondelement=respond
-                                data-replyto="Reply to Kevin Antony" aria-label='Reply to Kevin Antony'>Trả lời</a>
+                            <a rel=nofollow class=comment-reply-link href='?reply={{ $item->id }}#respond'>Trả lời</a>
                             <div class=comment-meta><i class="far fa-clock"></i>
                                 {{ date('d-m-Y', strtotime($item->created_at)) }}</div>
                             <div class=comment-body_dec></div>
                         </div>
-                        @if (isset($item->parentcommentID))
-                        {{-- @dd($item) --}}
-                        @foreach ($collection as $item)
-                            
-                        @endforeach
-                        <ul class=children>
-                            <li class="comment odd alt depth-2">
-                                <div class=comment-author>
-                                    <img src="{{$item->user->avatar}}" width=50 height=50 alt="{{$item->user->name}}"
-                                        class="avatar avatar-50 wp-user-avatar wp-user-avatar-50 alignnone photo tt-comment-avatar">
-                                </div>
-                                <div id=div-comment-6 class="comment-body smpar">
-                                    <h4>{{$item->user->name}}</h4>
-                                    <div class=clearfix></div>
-                                    <div class="clearfix comment-text">
-                                        <p>{{$item->mo_ta}}</p>
+                        @foreach ($item->replies as $reply)
+                            <ul class=children>
+                                <li class="comment odd alt depth-2">
+                                    <div class=comment-author>
+                                        <img src="{{ $reply->user->avatar }}" width=50 height=50
+                                            alt="{{ $reply->user->name }}"
+                                            class="avatar avatar-50 wp-user-avatar wp-user-avatar-50 alignnone photo tt-comment-avatar">
                                     </div>
-                                    <a rel=nofollow class=comment-reply-link href='index267f.html?replytocom=6#respond'
-                                        data-commentid=6 data-postid=43 data-belowelement=div-comment-6
-                                        data-respondelement=respond data-replyto="Reply to Liza Rose"
-                                        aria-label='Reply to Liza Rose'>Reply</a>
-                                    <div class=comment-meta><i class="far fa-clock"></i>  {{ date('d-m-Y', strtotime($item->created_at)) }}</div>
-                                    <div class=comment-body_dec></div>
-                                </div>
-                            </li>
-                        </ul>
-                        @endif
-                        
+                                    <div id=div-comment-6 class="comment-body smpar">
+                                        <h4>{{ $reply->user->name }}</h4>
+                                        <div class=clearfix></div>
+                                        <div class="clearfix comment-text">
+                                            <p>{{ $reply->mo_ta }}</p>
+                                        </div>
+                                        <a rel=nofollow class=comment-reply-link
+                                            href="?reply={{ $reply->id }}#respond">Trả lời</a>
+                                        <div class=comment-meta><i class="far fa-clock"></i>
+                                            {{ date('d-m-Y', strtotime($reply->created_at)) }}</div>
+                                        <div class=comment-body_dec></div>
+                                    </div>
+                            @include('client.reply.reply', ['reply' => $reply->replies])
+
+                                </li>
+                               
+
+                            </ul>
+                        @endforeach
+
+
+
                     </li>
                 @endforeach
 
@@ -307,36 +307,35 @@
                                 Cancel
                                 reply</a></small>
                     </h3>
-                   
+
                     <form action="{{ route('comment') }}" method=post id=commentform class="add-comment custom-form">
-                        <input  type="hidden" name="post_id" value="{{$postdetail->id}}">
+                        <input type="hidden" name="post_id" value="{{ $postdetail->id }}">
                         <?php if (isset($_GET['reply'])) { ?>
-                            <input type="hidden" name="reply" value="{{$_GET['reply']}}" id="">
-                       <?php } ?>
+                        <input type="hidden" name="reply" value="{{ $_GET['reply'] }}" id="">
+                        <?php } ?>
                         @csrf
-                      
+
 
                         <fieldset>
                             @if (!Auth::user())
                                 <div class=row>
                                     <div class=col-md-6><input id=author placeholder="Tên của bạn*" name='name' type=text
                                             value size=40>
-                                            <span style="color: red">
-                                                @error('name')
-                                                    {{$message}}
-                                                @enderror
-                                            </span>
-                                        </div>
+                                        <span style="color: red">
+                                            @error('name')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </div>
                                     <div class=col-md-6><input id=email placeholder="Email*" name=email type=text value
                                             size=40>
-                                            <span style="color: red">
-                                                @error('email')
-                                                    {{$message}}
-                                                @enderror
-                                            </span>
+                                        <span style="color: red">
+                                            @error('email')
+                                                {{ $message }}
+                                            @enderror
+                                        </span>
                                     </div>
                                 </div>
-                                
                             @endif
                             <p style="color: red;font-size: 12px">
                                 @if (session('message'))
@@ -346,7 +345,7 @@
                             <textarea id=comment name="mo_ta" cols=40 rows=8 placeholder="Bình luận*" aria-required=true></textarea>
                             <span style="color: red">
                                 @error('mo_ta')
-                                    {{$message}}
+                                    {{ $message }}
                                 @enderror
                             </span>
                         </fieldset>

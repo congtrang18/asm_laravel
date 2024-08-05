@@ -34,12 +34,13 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span data-key="t-menu">Menu</span></li>
 
+                @if (Auth::user()->role==3)
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="">
+                    <a class="nav-link menu-link" href="{{route('admin.dashboard')}}">
                         <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
                     </a>
-                </li> <!-- end Dashboard Menu -->
-
+                </li>
+               
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarCategory" data-bs-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarCategory">
@@ -78,30 +79,88 @@
                                 <a href="{{route("admin.post.create")}}" class="nav-link"
                                    data-key="t-horizontal">Thêm mới</a>
                             </li>
+                           
                         </ul>
                     </div>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarProduct" data-bs-toggle="collapse" role="button"
-                       aria-expanded="false" aria-controls="sidebarProduct">
+                    <a class="nav-link menu-link" href="#sidebarpd" data-bs-toggle="collapse" role="button"
+                       aria-expanded="false" aria-controls="sidebarpd">
                         <i class="ri-layout-3-line"></i>
-                        <span data-key="t-layouts">Sản phẩm</span>
+                        <span data-key="t-layouts">Phê duyệt bài viết</span>
 
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarProduct">
+                    <div class="collapse menu-dropdown" id="sidebarpd">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="" class="nav-link"
+                                <a href="{{route('admin.pd')}}" class="nav-link"
+                                   data-key="t-horizontal">Danh sách</a>
+                            </li>
+                           
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarUser" data-bs-toggle="collapse" role="button"
+                       aria-expanded="false" aria-controls="sidebarUser">
+                        <i class="ri-layout-3-line"></i>
+                        <span data-key="t-layouts">Người dùng</span>
+
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarUser">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{route('admin.user')}}" class="nav-link"
+                                   data-key="t-horizontal">Danh sách</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                
+                @endif
+                {{-- tác giả --}}
+                @if (Auth::user()->role==2)
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{route('admin.dashboard')}}">
+                        <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
+                    </a>
+                </li>
+               
+                
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarCatalogues" data-bs-toggle="collapse" role="button"
+                       aria-expanded="false" aria-controls="sidebarCatalogues">
+                        <i class="ri-layout-3-line"></i>
+                        <span data-key="t-layouts">Bài viết</span>
+
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarCatalogues">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{route("admin.post.index")}}" class="nav-link"
                                    data-key="t-horizontal">Danh sách</a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link"
+                                <a href="{{route("admin.post.create")}}" class="nav-link"
                                    data-key="t-horizontal">Thêm mới</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.post.choxuly')}}" class="nav-link"
+                                   data-key="t-horizontal">chờ xử lý</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route("admin.post.refuse")}}" class="nav-link"
+                                   data-key="t-horizontal">đã từ chối</a>
                             </li>
                         </ul>
                     </div>
                 </li>
+
+               
+                @endif
 
             </ul>
         </div>

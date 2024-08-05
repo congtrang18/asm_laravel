@@ -11,7 +11,7 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
-                        <li class="breadcrumb-item active">Bài viết</li>
+                        <li class="breadcrumb-item active">User</li>
                     </ol>
                 </div>
 
@@ -25,8 +25,11 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h5 class="card-title mb-0">Danh sách</h5>
-
-                    <a href="{{ route('admin.post.create') }}" class="btn btn-primary mb-3">Thêm mới</a>
+                    <span style="color: red">
+                        @if (session('message'))
+                            {{session('message')}}
+                        @endif
+                    </span>
                 </div>
                 <div class="card-body">
                     <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle"

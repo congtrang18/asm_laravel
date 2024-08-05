@@ -35,6 +35,10 @@ class Post extends Model
     //     'is_show_home'=>'boolean',
 
     // ];
+    public function views(){
+        $this->luot_xem+=1;
+        $this->save();
+    }
     public function tag(){
         return $this->belongsTo(Tag::class);
     } 

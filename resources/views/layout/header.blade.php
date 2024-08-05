@@ -149,7 +149,7 @@
                             {{-- @dd($item['posts']) --}}
                             <li id=menu-item-59
                                 class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children">
-                                <a href=blog/index.html class=menu-blog>{{ $item['name'] }}<i
+                                <a href={{route('tag',$item['id'])}} class=menu-blog>{{ $item['name'] }}<i
                                         class="fas fa-caret-down"></i></a>
                                 <ul class=sub-menu>
                                     @foreach ($item['posts'] as $post)

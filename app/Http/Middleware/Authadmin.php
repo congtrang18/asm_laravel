@@ -16,7 +16,8 @@ class Authadmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->role==3) {
+        if (Auth::check() && (Auth::user()->role==3 || Auth::user()->role==2)) {
+            
             return $next($request);
 
         }

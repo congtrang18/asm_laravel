@@ -58,7 +58,7 @@
                             <td>{{ date('d-m-Y',strtotime($item->created_at)) }}</td>
                             <td>{{ date('d-m-Y ',strtotime($item->updated_at)) }}</td>
                             <td>
-                                <a href="" class="btn btn-info mb-3">Xem</a>
+                               
                                 <a href="{{route("admin.tag.show",$item->id)}}"
                                    class="btn btn-warning mb-3">Sửa</a>
 

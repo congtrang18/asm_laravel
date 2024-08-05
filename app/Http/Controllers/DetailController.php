@@ -14,30 +14,28 @@ class DetailController extends Controller
 
    public function index($id, $slug)
    {
-      $postdetail = Post::with('tag', 'user')->findOrFail($id);
+
+      $postdetail = Post::with('tag', 'user','comments')->findOrFail($id);
+
+      $postdetail->views();
+      $countcomment=Post::withCount('comments')->findOrFail($id);
       $postdefaut = Post::with('tag')->where([
          ['tag_id', $postdetail->tag_id],
          ['id', '<>', $id]
       ])->get();
-      // $posts_new = Post::query()->where('tin_moi', 'like', 'on')->get();
-      //    dd($postdefaut);
-      // $post_popular = Post::with('tag')->where('tin_noi_bat', 'like', 'on')->limit(4)->orderByDesc('id')->get();
+      
 
       $tags = Tag::withCount('posts')->get();
-      // $menus = Tag::with('posts')->get();
-      // $banners = Post::with('tag')->where('tin_moi', 'like', 'on')->limit(4)->get();
-      $comments = Comment::with('user', 'post')->where('post_id', $id)->orderBy('id', 'desc')->get();
-      // dd($comments);
-
+      
+      $comments = Comment::with('user','post','replies')->where('post_id', $id)->whereNull('parentcommentID')->orderBy('id', 'desc')->get();
+// dd($comments);
       return view('client.detail.detailPosts', compact(
          'postdetail',
          'tags',
          'postdefaut',
-         // 'posts_new',
-         // 'menus',
-         // 'banners',
-         // 'post_popular',
-         'comments'
+         
+         'comments',
+         'countcomment'
       ));
    }
    public function comment(Request $request)

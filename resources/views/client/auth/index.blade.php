@@ -22,6 +22,8 @@
     ?>
     <div id=main>
         @include('layout.header')
+    @yield('chatbox')
+
         <div id=wrapper>
             <div class=content>
                 @yield('image')

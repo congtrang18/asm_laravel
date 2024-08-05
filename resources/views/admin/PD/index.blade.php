@@ -1,13 +1,12 @@
 @extends('admin.layouts.master')
-
 @section('title')
-    Bài Viết
+    Danh sách 
 @endsection
 @section('content')
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0">Bài viết</h4>
+                <h4 class="mb-sm-0">User</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
@@ -26,12 +25,8 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h5 class="card-title mb-0">Danh sách</h5>
-                    <span style="color: red">
-                        @if (session()->has('message'))
-                            {{session('message')}}
-                        @endif
-                      </span>
-                    <a href="{{ route('admin.post.create') }}" class="btn btn-primary mb-3">Thêm mới</a>
+
+                    
                 </div>
                 <div class="card-body">
                     <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle"
@@ -40,18 +35,13 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Tiêu đề</th>
-                               
-                                <th>Mô tả ngắn</th>
-                                <th>lượt xem </th>
-                                <th>Tin nổi bật</th>
-                                <th>Tin mới</th>
-                                <th>Show home</th>
+                                <th>Tên bài viết</th>
 
-                                <th>Hình ảnh</th>
-                                <th>Danh mục</th>
+                                <th>ảnh </th>
+                                <th>user</th>
+                    
 
-                                <th>Action</th>
+                                <th>Phê duyệt</th>
                             </tr>
                         </thead>
 
@@ -60,38 +50,34 @@
                                 <tr>
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->tieu_de }}</td>
-                                  
-                                    <td>@php
-                                        $substr=substr($item->mo_ta_ngan,0,200) .'...';
-                                        echo $substr;
-                                    @endphp</td>
-                                    <td>{{ $item->luot_xem }}</td>
-                                    <td>{!! $item->tin_noi_bat === 'on'
-                                        ? '<span class="btn btn-danger">Yes</span>'
-                                        : '<span class="btn btn-warning">No</span>' !!}</td>
-                                    <td>{!! $item->tin_moi ==='on' ? '<span class="btn btn-danger">Yes</span>' : '<span class="btn btn-warning">No</span>' !!}</td>
-                                    <td>{!! $item->is_show_home ==='on'
-                                        ? '<span class="btn btn-danger">Yes</span>'
-                                        : '<span class="btn btn-warning">No</span>' !!}</td>
-                                    <td><img src="{{ $item->anh_dai_dien }}" style="width: 100px" alt=""></td>
-                                    <td>{{ $item->name }}</td>
-
-
+                                    <td><img src="{{ $item->anh_dai_dien }}" style="width: 100px;" alt=""></td>
+                                    <td>{{ $item->user->name }}</td>
                                     <td>
-                                        <section class="d-flex justify-content-evenly w-50% ">
-                                            <a href="{{ route('admin.post.edit', $item->id) }}"
-                                                class="btn btn-warning mb-3">Sửa</a>
-    
-                                           <form action="{{ route('admin.post.destroy', $item->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button onclick="return confirm('bạn chắc chắn muốn xóa')" type="submit"
-                                                class="btn btn-danger">xóa</button>
+                                        <form>
+                                            <select data-id="{{ $item->id }}" name=""
+                                                class="form form-select role" id="">
+                                                <option value="1" @if ($item->phe_duyet_id == 1) selected @endif>
+                                                    chờ xử lý
+                                                </option>
+                                                <option value="2" @if ($item->phe_duyet_id == 2) selected @endif>đã duyệt bài
+                                                </option>
+                                                <option value="3" @if ($item->phe_duyet_id == 3) selected @endif>
+                                                    từ chối
+                                                </option>
+                                            </select>
                                         </form>
-                                        </section>
-                                            
-                                       
+
+
                                     </td>
+
+                                    {{-- <td>
+                                        <section class="d-flex justify-content-evenly w-50% ">
+                                            <a href="{{route('admin.user.destroy',$item->id)}}" onclick="return confirm('bạn chắc chắn muốn xóa')" type="submit"
+                                            class="btn btn-danger">xóa</a >
+                                        </section>
+
+
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
@@ -125,12 +111,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         new DataTable("#example", {
             order: [
                 [0, 'desc']
             ]
         });
+
+        let role = document.querySelectorAll(".role");
+
+        // console.log(role);
+
+        role.forEach(function(item) {
+            item.addEventListener('change', function() {
+               
+                
+                let post_id = item.dataset.id;
+                let phe_duyet=item.value;
+                // console.log(role);
+                // console.log(phe_duyet);
+                $.ajax({
+                    type: "GET",
+                    url: "pd/update",
+                    data: 'phe_duyet=' + phe_duyet +'&post_id='+post_id,
+
+
+                })
+            })
+        })
     </script>
 @endsection

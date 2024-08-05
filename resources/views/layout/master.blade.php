@@ -4,26 +4,34 @@
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
 <head>
- 
+
     @include('layout.head')
     @yield('style')
 </head>
-<?php 
+<?php
 use App\Models\Admin\Post;
 use App\Models\Admin\Tag;
 
-$posts_new = Post::with('tag')->where('tin_moi', 'like', 'on')->get();
-$banners = Post::with('tag', 'user')->where('tin_moi', 'like', 'on')->limit(4)->get();
+$posts_new = Post::with('tag')
+    ->where([['tin_moi', 'like', 'on'], ['phe_duyet_id', 2]])
+    ->get();
+$banners = Post::with('tag', 'user')
+    ->where([['tin_moi', 'like', 'on'], ['phe_duyet_id', 2]])
+    ->limit(4)
+    ->get();
 $menus = Tag::with('posts')->get();
-$post_popular=Post::with('tag')->where('tin_noi_bat', 'like', 'on')->limit(4)->orderByDesc('id')->get();
+$post_popular = Post::with('tag')
+    ->where([['tin_noi_bat', 'like', 'on'], ['phe_duyet_id', 2]])
+    ->limit(4)
+    ->orderByDesc('id')
+    ->get();
 $tags = Tag::withCount('posts')->get();
-
-
 
 // var_dump($tags);
 // die;
 
 ?>
+
 <body id=body
     class="home page-template-default page page-id-13 wp-embed-responsive theme-gmag woocommerce-no-js elementor-default elementor-kit-7 elementor-page elementor-page-13">
     <div id=main>
@@ -45,10 +53,10 @@ $tags = Tag::withCount('posts')->get();
 
                             <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-16479b42"
                                 data-id=16479b42 data-element_type=column>
-                                
-                                    @include('layout.navbar')
-                                    
-                              
+
+                                @include('layout.navbar')
+
+
                             </div>
 
 
@@ -72,7 +80,7 @@ $tags = Tag::withCount('posts')->get();
                 </ul>
             </div>
             {{-- <div class=woocommerce-notices-wrapper></div> --}}
-            
+
         </div>
         @include('layout.script')
 </body>

@@ -56,6 +56,7 @@ class QLTKController extends Controller
     public function destroy(string $id)
     {
         User::query()->where('id',$id)->delete();
-        return back();
+        return back()->with('message','xóa thành công');
     }
+    
 }

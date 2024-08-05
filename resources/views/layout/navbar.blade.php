@@ -94,7 +94,7 @@
             <h5>Danh mục phổ biến</h5>
             <div class=tagcloud>
                 @foreach ($tags as $item)
-                    <a href=tag/business/index.html class="tag-cloud-link tag-link-6 tag-link-position-1"
+                    <a href="{{route('tag',$item->id)}}" class="tag-cloud-link tag-link-6 tag-link-position-1"
                         style="font-size: 22pt;" aria-label="Business (27 items)">{{ $item->name }}</a>
                 @endforeach
 
@@ -109,7 +109,7 @@
             <div class=box-widget-content>
                 <div class=sb-categories_bg>
                     @foreach ($tags as $key => $tag)
-                        <a href=category/politics/index.html class=sb-categories_bg_item>
+                        <a href="{{route('tag',$tag->id)}}" class=sb-categories_bg_item>
                             <div class=bg-wrap>
                                 <div class=bg data-bg={{ $tag->hinh_anh }}>
                                 </div>

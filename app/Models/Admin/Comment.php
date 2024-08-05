@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     use HasFactory;
-    protected $fillable=[
+    protected $fillable = [
         'post_id',
         'user_id',
         'parentcommentID',
@@ -17,11 +17,22 @@ class Comment extends Model
         'avatar'
 
     ];
-    public function post(){
+    public function post()
+    {
         return $this->belongsTo(Post::class);
     }
-    public function user(){
+    public function user()
+    {
 
         return $this->belongsTo(User::class);
+    }
+    public function replies()
+    {
+        return $this->hasMany(Comment::class, 'parentcommentID');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Comment::class, 'parentcommentID');
     }
 }
